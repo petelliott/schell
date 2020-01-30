@@ -1,6 +1,7 @@
 (define-module (schell)
   #:use-module (srfi srfi-9)
   #:use-module (ice-9 threads)
+  #:use-module (ice-9 textual-ports)
   #:export (stdin
             stdout
             &
@@ -8,7 +9,8 @@
             $
             ||
             >>
-            <<))
+            <<
+            stdin->string))
 
 
 (define stdin  (make-parameter (current-input-port)))
@@ -79,3 +81,6 @@
     (lambda (port)
       (parameterize ((stdin port))
         command))))
+
+(define (stdin->string)
+  (get-string-all (stdin)))
